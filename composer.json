@@ -1,0 +1,19 @@
+{
+	"name": "kummerspeck/config",
+	"description": "Interface with config files and the options api.",
+    "keywords": ["wordpress", "library", "config", "options"],
+    "authors": [
+        {
+            "name": "Brian Greenacre",
+            "email": "bgreenacre42@gmail.com",
+            "role": "Developer"
+        }
+    ],
+	"autoload": {
+		"psr-0": {"kummerspeck": "src/"},
+        "files": ["src/functions/Arr.php"]
+	},
+	"require": {
+		"php": ">=5.3.3"
+	}
+}
