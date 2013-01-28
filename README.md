@@ -29,16 +29,16 @@ This library provides an easier interface to the options api using OOP design.
 	$options = new \Kummerspeck\Config('/path/to/configs', 'example');
 
 	// Would echo "Plugin Example"
-	echo $options['name'];
+	echo $options['plugin.name'];
 
 	// Would echo "embedded value"
-	echo $options['first_level.second_level.test1'];
+	echo $options['plugin.first_level.second_level.test1'];
 
 	// Example of setting a value;
-	$options['name'] = 'A different name';
+	$options['plugin.name'] = 'A different name';
 
 	// Would echo the just set value above.
-	echo $options['name'];
+	echo $options['plugin.name'];
 
 	// Just because we set the index "name" to a new value doesn't mean
 	// it's saved in the options api. To do that, just call the save method
