@@ -10,8 +10,7 @@
         }
     ],
 	"autoload": {
-		"psr-0": {"kummerspeck": "src/"},
-        "files": ["src/functions/Arr.php"]
+		"psr-0": {"kummerspeck": "src/"}
 	},
 	"require": {
 		"php": ">=5.3.3",
