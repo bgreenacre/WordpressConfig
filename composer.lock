@@ -1,0 +1,43 @@
+{
+    "hash": "0ff6cc3eddd622a59d11ac2defb241ab",
+    "packages": [
+        {
+            "name": "bgreenacre/multiarray",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bgreenacre/MultiArray",
+                "reference": "e6ca8ece868b142bef2a85546efbd979ea9dcce6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bgreenacre/MultiArray/zipball/e6ca8ece868b142bef2a85546efbd979ea9dcce6",
+                "reference": "e6ca8ece868b142bef2a85546efbd979ea9dcce6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "5.3.*"
+            },
+            "time": "2013-01-23 21:46:35",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Multi": "src/"
+                }
+            },
+            "description": "Access a multi dimensional array using dot notation.",
+            "support": {
+                "source": "https://github.com/bgreenacre/MultiArray/tree/master",
+                "issues": "https://github.com/bgreenacre/MultiArray/issues"
+            }
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "bgreenacre/multiarray": 20
+    }
+}
