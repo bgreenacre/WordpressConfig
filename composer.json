@@ -10,7 +10,7 @@
         }
     ],
 	"autoload": {
-		"psr-0": {"kummerspeck": "src/"}
+		"psr-0": {"Kummerspeck": "src/"}
 	},
 	"require": {
 		"php": ">=5.3.3",

@@ -65,7 +65,8 @@ class Config extends \Multi\Arr {
 
         if ($namespace !== null)
         {
-            $this->setNamespace($namespace);
+            $this->setNamespace($namespace)
+                ->loadNamespace();
         }
     }
 
@@ -187,6 +188,27 @@ class Config extends \Multi\Arr {
         $parts = $this->getPathParts($key);
 
         return (in_array($this->getNamespace() . $parts[0], $this->_loaded));
+    }
+
+    /**
+     * Load config file or folder of the set namespace if any exists.
+     *
+     * @access public
+     * @return $this
+     */
+    public function loadNamespace()
+    {
+        $namespace = rtrim($this->getNamespace(), $this->getDelimiter());
+        $filePath  = $this->getFilePath();
+
+        if (is_file($filePath . $namespace . '.php'))
+        {
+            $this->_data = $this->_loadFile($filePath . $namespace, 'php');
+        }
+        elseif (is_dir($filePath . $namespace))
+        {
+            //
+        }
     }
 
     /**
