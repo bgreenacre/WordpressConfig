@@ -8,13 +8,14 @@
  */
 
 /**
- * Config class handles all interactions between loading
- * and saving options to the [wordpress options api](https://codex.wordpress.org/Options_API).
+ * Config class handles all interactions between loading and saving options
+ * to the [wordpress options api](https://codex.wordpress.org/Options_API).
  * This class can also load option values from a config file which
  * is useful when setting default values in an options form.'
  *
  * @package Kummerspeck/Wordpress
  * @subpackage Utility/Config
+ * @author Brian Greenacre <bgreenacre42@gmail.com>
  * @version $id$
  */
 class Config extends \Multi\Arr {
@@ -59,7 +60,7 @@ class Config extends \Multi\Arr {
     public function __construct($path, $namespace = null, $delimiter = null)
     {
         parent::__construct(null, $delimiter);
-        
+
         $this->setFilePath($path);
 
         if ($namespace !== null)

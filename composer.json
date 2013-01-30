@@ -1,5 +1,5 @@
 {
-	"name": "kummerspeck/config",
+	"name": "kummerspeck/wordpress-config",
 	"description": "Interface with config files and the options api.",
     "keywords": ["wordpress", "library", "config", "options"],
     "authors": [
