@@ -194,20 +194,65 @@ class Config extends \Multi\Arr {
      * Load config file or folder of the set namespace if any exists.
      *
      * @access public
+     * @param  string $path Relative path.
      * @return $this
      */
-    public function loadNamespace()
+    public function loadNamespace($path = '')
     {
         $namespace = rtrim($this->getNamespace(), $this->getDelimiter());
         $filePath  = $this->getFilePath();
 
-        if (is_file($filePath . $namespace . '.php'))
+        if ( ! $path && is_file($filePath . $namespace . '.php'))
         {
-            $this->_data = $this->_loadFile($filePath . $namespace, 'php');
+            // Set data array with the namespace config file name
+            $this->_data = $this->_loadFile($filePath . $namespace . $path, 'php');
         }
-        elseif (is_dir($filePath . $namespace))
+        elseif (is_dir($filePath . $namespace . $path))
         {
-            //
+            // Iterate files in the namespace folder.
+            $dir = new DirectoryIterator($filePath . $namespace . $path);
+
+            foreach ($dir as $file)
+            {
+                $filename = $file->getFilename();
+
+                if ($filename[0] === '.' OR $filename[strlen($filename)-1] === '~')
+                {
+                    // Skip all hidden files and UNIX backup files
+                    continue;
+                }
+                elseif ($file->isDir())
+                {
+                    // Move into the directory and load all files.
+                    if ( ! $path)
+                    {
+                        $path .= DIRECTORY_SEPARATOR;
+                    }
+
+                    $this->loadNamespace($path . $filename . DIRECTORY_SEPARATOR);
+                }
+                elseif ($file->getExtension() === 'php')
+                {
+                    // Found a php config file so load it's contents
+                    $data    = $this->_loadFile($filePath . $namespace . $path . $filename, 'php');
+                    $pathKey = $this->getNamespace();
+
+                    if ($path)
+                    {
+                        // If there is a relative path then set the specific
+                        // index path based on the relative path.
+                        $pathKey .= str_replace(
+                            DIRECTORY_SEPARATOR,
+                            $this->getDelimiter(),
+                            $path
+                        );
+
+                        rtrim($pathKey, $this->getDelimiter());
+                    }
+
+                    $this[$pathKey] = $data;
+                }
+            }
         }
     }
 
