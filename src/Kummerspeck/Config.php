@@ -7,12 +7,6 @@
  * @version $id$
  */
 
-use ArrayAccess;
-use Kummerspeck\Arr\set_path;
-use Kummerspeck\Arr\get_path;
-use Kummerspeck\Arr\unset_path;
-use Kummerspeck\Arr\get_key;
-
 /**
  * Config class handles all interactions between loading
  * and saving options to the [wordpress options api](https://codex.wordpress.org/Options_API).
@@ -23,7 +17,7 @@ use Kummerspeck\Arr\get_key;
  * @subpackage Utility/Config
  * @version $id$
  */
-class Config implements ArrayAccess {
+class Config extends \Multi\Arr {
 
     /**
      * Set the name space for all options
@@ -36,29 +30,12 @@ class Config implements ArrayAccess {
     protected $_namespace;
 
     /**
-     * The delimiter character to use when getting or
-     * setting embeded values in the array.
-     *
-     * @access protected
-     * @var string
-     */
-    protected $_delimiter = '.';
-
-    /**
      * Path to where config files exist.
      *
      * @access protected
      * @var string
      */
     protected $_path;
-
-    /**
-     * The complete array of data for the set namespace.
-     *
-     * @access protected
-     * @var array
-     */
-    protected $_data = array();
 
     /**
      * Tracks which top-level config/option values have been
@@ -81,16 +58,13 @@ class Config implements ArrayAccess {
      */
     public function __construct($path, $namespace = null, $delimiter = null)
     {
+        parent::__construct(null, $delimiter);
+        
         $this->setFilePath($path);
 
         if ($namespace !== null)
         {
             $this->setNamespace($namespace);
-        }
-
-        if ($delimiter !== null)
-        {
-            $this->setDelimiter($delimiter);
         }
     }
 
@@ -284,31 +258,6 @@ class Config implements ArrayAccess {
     }
 
     /**
-     * Set the delimiter character.
-     *
-     * @access public
-     * @param string $delimiter
-     * @return $this
-     */
-    public function setDelimiter($delimiter)
-    {
-        $this->_delimiter = $delimiter;
-
-        return $this;
-    }
-
-    /**
-     * Get delimiter
-     *
-     * @access public
-     * @return string
-     */
-    public function getDelimiter()
-    {
-        return $this->_delimiter;
-    }
-
-    /**
      * Set file path where config files are located.
      *
      * @access public
@@ -348,80 +297,6 @@ class Config implements ArrayAccess {
     public function getFilePath()
     {
         return $this->_path;
-    }
-
-    /**
-     * Sets a value to an array index path.
-     *
-     * @access public
-     * @param  string $key   Array index path.
-     * @param  mixed  $value Value to set to path.
-     * @return void
-     */
-    public function offsetSet($key, $value)
-    {
-        if ( ! $this->loaded($key))
-        {
-            $this->load($key);
-        }
-
-        set_path(
-            $this->_data,
-            $this->getNamespace(), $key,
-            $value,
-            $this->getDelimiter()
-        );
-    }
-
-    /**
-     * Get an array index path from the config/options
-     * array that's set in this object.
-     *
-     * @access public
-     * @param  string $key Array index path.
-     * @return mixed       Value that is set in the array.
-     */
-    public function offsetGet($key)
-    {
-        if ( ! $this->loaded($key))
-        {
-            $this->load($key);
-        }
-
-        return get_path(
-            $this->_data,
-            $this->getNamespace(), $key,
-            null,
-            $this->getDelimiter()
-        );
-    }
-
-    /**
-     * Unset a array index path.
-     *
-     * @access public
-     * @param  string $key Array index path.
-     * @return void
-     */
-    public function offsetUnset($key)
-    {
-        unset_path(
-            $this->_data,
-            $this->getNamespace() . $key,
-            $this->getDelimiter()
-        );
-    }
-
-    /**
-     * Check to see if a array index path exists.
-     *
-     * @access public
-     * @param  string $key Array index path.
-     * @return bool        True if array index path is found else false.
-     */
-    public function offsetExists($key)
-    {
-        return ($this->offsetGet($key) !== null);
     }
 
 }

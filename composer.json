@@ -14,6 +14,13 @@
         "files": ["src/functions/Arr.php"]
 	},
 	"require": {
-		"php": ">=5.3.3"
-	}
+		"php": ">=5.3.3",
+        "bgreenacre/multiarray": "dev-master"
+	},
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bgreenacre/MultiArray"
+        }
+    ]
 }
